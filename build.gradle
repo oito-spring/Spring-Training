@@ -1,0 +1,54 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.8.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+sourceSets {
+  main {
+    java {
+      srcDir 'build/generated/sources/annotationProcessor/java/main'
+    }
+  }
+}
+group = 'com.spring.training'
+version = '0.0.1-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+sourceCompatibility = '1.8'
+targetCompatibility = 1.8
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+sourceSets {
+    test.compileClasspath += configurations.compileOnly
+    test.runtimeClasspath += configurations.compileOnly
+}
+task sourcesJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+repositories {
+	jcenter()
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly  'org.mapstruct:mapstruct-jdk8:1.3.1.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+	implementation 'org.apache.logging.log4j:log4j-api'
+	implementation 'org.apache.logging.log4j:log4j-api'
+	implementation 'org.springframework.spring-aop:spring-aop'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'org.apache.logging.log4j:log4j-core'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
